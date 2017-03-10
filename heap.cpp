@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cmath>
 #include "heap.h"
 
 using namespace std;
@@ -25,10 +27,10 @@ bool Heap::empty(){
     return false;
   }
 }
-int Heap::add(int n){
+void Heap::add(int n){
   //if our array is big enough we dont need to increase it
   if(count < size){
-    nodes[count] = num;
+    node[count] = n;
     siftup(count);
     count++;
   }
@@ -39,7 +41,7 @@ int Heap::add(int n){
       nodex[i] = node[i];
     }
     for(int a = 0;a < 2*size;a++){
-      nodex[i] = 0;
+      nodex[a] = 0;
     }
     int* temp = node;
     node = nodex;
@@ -86,6 +88,51 @@ void Heap::siftdown(int x){
   }
 }
 //printing the tree
+/*
 void Heap::print(){
-  
+  int level = ceil(log2(count+1));
+  int index = 0;
+  for(int i = 1;i < level;i++){
+    for(int a = 0; a < pow(2,level-1)-1;a++){
+      cout << ' ';
+    }
+    //print out elements of the heap
+    for(int z = 0; z < pow(2,i-1);z++){
+      if(node[index] != 0){
+	cout << node[index++];
+      }
+      else{
+	break;
+      }
+      for(int a = 0;a < pow(2,level - i + 1) -1; a++){
+	cout << ' ';
+      }
+    }
+    cout << endl;
+  }
+}
+*/
+void Heap::print(){
+    int numLevels = ceil(log2(count + 1));
+    int index = 0;
+    for(int l=1; l <= numLevels; l++){
+        //Initial spaces:
+        for(int i=0; i < pow(2, numLevels-l)-1; i++){
+            cout << ' ';
+        }
+        //Nodes:
+        for(int n=0; n < pow(2, l-1); n++){
+            if(node[index] != 0){
+                cout << node[index++]; // Node
+            }
+            else{
+                break;
+            }
+            //Spaces between nodes:
+            for(int i=0; i < pow(2, numLevels - l + 1) - 1; i++){
+                cout << ' ';
+            }
+        }
+        cout << endl;
+    }
 }

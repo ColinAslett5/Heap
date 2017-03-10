@@ -1,40 +1,95 @@
 //Colin Aslett, Heap, C++ Period 07
 #include <iostream>
+#include "heap.h"
+#include <string.h>
+#include <fstream>
 using namespace std;
-struct Heap{
-  int node;
-  int size;//number of nodes in the heap
-};
-void iden(char* input);
-void add(int secnum);
+
+void fill(Heap &heap,char* link);
+void print(Heap &heap);
+
 int main(){
-  //settings for the heap
-  Heap->size = 0;
-  //input
-  char input[200];
-  cout << "enter a series of numbers seperated by spaces" << endl;
-  //cin.ignore(); probably dont need this unless you start with a space
-  cin.getline(input,150);
-  iden(input);
-}
-//about to put something on the heap, but first gotta identify the number
-void iden(char* input){
-  int num = 0;
-  while(input[num] != '\0'){//might be wrong
-    if(isdigit(input[num])){
-      //int secnum = 0;
-      int secnum = input[num] - '0';
-      while(isdigit(input[++num])){
-	secnum = 10*secnum + (input[num] - '0');
+  while(true){
+    Heap heap;
+    char input;
+    cout << "enter a option, 1: enter numbers, 2: file, 3: quit" << endl;
+    cin >> input;
+    //manual insertion
+    if(input == '1'){
+      cout << "enter a list" << endl;
+      char numb[200];
+      cin.ignore();
+      cin.getline(numb,200);
+      fill(heap,numb);
+    }
+    //file insertion
+    else if(input == '2'){
+      char name[32];
+      cout << "enter file name" << endl;
+      cin >> name;
+      ifstream stream(name);
+      if(stream.is_open()){
+	char list[10000];
+	stream.getline(list,10000,0);
+	stream.close();
+	fill(heap,list);
       }
-      add(secnum);
+      else{
+	cout << "could not open" << endl;
+	continue;
+      }
+    }
+    //quitting
+    else if(input == '3'){
+      break;
     }
     else{
-      num++;
+      cout << "????" << endl;
+    }
+    //ways to print out the tree
+    cout << "options to print, 1: descending order, 2: just tree, 3: 1&2, 4: quit" << endl;
+    cin >> input;
+    if(input == '1'){
+      print(heap);
+    }
+    else if(input == '2'){
+      heap.print();
+    }
+    else if(input == '3'){
+      cout << "tree:" << endl;
+      heap.print();
+      cout << "list:" << endl;
+      print(heap);
+    }
+    else if(input == '4'){
+      break;
+    }
+    else{
+      cout << "????" << endl;
     }
   }
 }
-//adding to the heap
-void add(int secnum){
-  cout << secnum << endl;
+//filling the heap with numeros
+void fill(Heap &heap, char* link){
+  int i = 0;
+  while(link[i]){
+    if(isdigit(link[i])){
+      int z = link[i] - '0';
+      while(isdigit(link[++i])){
+	z = 10*z + (link[i] - '0');
+      }
+      heap.add(z);
+    }
+    else{
+      i++;
+    }
+  }
+}
+//printing out the tree
+void print(Heap &heap){
+  cout << heap.pop();
+  while(!heap.empty()){
+    cout << ", " << heap.pop();
+  }
+  cout << endl;
 }

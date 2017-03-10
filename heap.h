@@ -2,8 +2,8 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-Class Heap{
- Public:
+class Heap{
+ public:
   Heap();
   ~Heap();
   int peek();
@@ -17,4 +17,5 @@ Class Heap{
   int size;
   int* node;
   int count;
-}
+};
+#endif
