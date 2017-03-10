@@ -87,40 +87,14 @@ void Heap::siftdown(int x){
     siftdown(m);
   }
 }
-//printing the tree
-/*
-void Heap::print(){
-  int level = ceil(log2(count+1));
-  int index = 0;
-  for(int i = 1;i < level;i++){
-    for(int a = 0; a < pow(2,level-1)-1;a++){
-      cout << ' ';
-    }
-    //print out elements of the heap
-    for(int z = 0; z < pow(2,i-1);z++){
-      if(node[index] != 0){
-	cout << node[index++];
-      }
-      else{
-	break;
-      }
-      for(int a = 0;a < pow(2,level - i + 1) -1; a++){
-	cout << ' ';
-      }
-    }
-    cout << endl;
-  }
-}
-*/
+//printing out the tree
 void Heap::print(){
     int numLevels = ceil(log2(count + 1));
     int index = 0;
     for(int l=1; l <= numLevels; l++){
-        //Initial spaces:
         for(int i=0; i < pow(2, numLevels-l)-1; i++){
             cout << ' ';
         }
-        //Nodes:
         for(int n=0; n < pow(2, l-1); n++){
             if(node[index] != 0){
                 cout << node[index++]; // Node
@@ -128,7 +102,6 @@ void Heap::print(){
             else{
                 break;
             }
-            //Spaces between nodes:
             for(int i=0; i < pow(2, numLevels - l + 1) - 1; i++){
                 cout << ' ';
             }
